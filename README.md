@@ -1,66 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Coding Test Project Setup
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### To setup this project successfully, you need
 
-## About Laravel
+- **[Composer For PHP Dependencies](https://getcomposer.org/)**
+- **[PHP 8.1 Minimun requirement for Laravel 10](https://www.apachefriends.org/download.html)**
+- **[MYSQL For Managing the database](https://www.apachefriends.org/download.html/)**
+- **[NodeJS for installing VueJS dependencies](https://nodejs.org/en/)**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## 1. Clone the Project Repository
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- ### Clone the project Repository by Running this command in a folder you have created.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+![Cloning the Project](/installation_files/coding_test_1.PNG "Cloning the Project").
 
-## Laravel Sponsors
+## 2. Install Dependencies
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- ### Once the project has been cloned, cd into the project and run.
 
-### Premium Partners
+```
+composer install 
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+![Cloning the Project](/installation_files/coding_test_2.PNG "Cloning the Project").
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 3. Configure Database and Set up the Project
 
-## Code of Conduct
+- Rename .env-example to .env
+- Add database details to the .env ( Make sure to create the database or you can create it during migration ).
+- Run the following command to create the database and migrate the desired tables.
+  
+  ```
+  php artisan migrate
+  ```
+- Run the following command to clear cache, run migrations,run database seeders and factories.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+php artisan setup:dev 
+```
 
-## Security Vulnerabilities
+![Cloning the Project](/installation_files/coding_test_3.PNG "Cloning the Project").
+![Cloning the Project](/installation_files/coding_test_4.PNG "Cloning the Project").
+![Cloning the Project](/installation_files/coding_test_5.PNG "Cloning the Project").
+![Cloning the Project](/installation_files/coding_test_6.PNG "Cloning the Project").
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+## 4. Start Backend Server
+- Start the serve by running the command below. Don't close the serve as this will be required to be used by the frontend server.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+php artisan serve
+```
+![Cloning the Project](/installation_files/coding_test_7.PNG "Cloning the Project").
+
+
+## 5. Install Dependencies for frontend
+- From another terminal window into travel-agency-front-end inside your project and run npm install to intall frontend dependencies.
+
+```
+npm install
+```
+![Cloning the Project](/installation_files/coding_test_8.PNG "Cloning the Project").
+
+
+## 6. Start Frontend Server
+- Start your Frontend server by running npm run dev.
+
+```
+npm run dev
+```
+![Cloning the Project](/installation_files/coding_test_9.PNG "Cloning the Project").
+
+
+## 6. Accessing the Website
+- ### The frontend runs on port 3000, you can now access it on the browser at localhost:3000
+
+![Cloning the Project](/installation_files/coding_test_10.PNG "Cloning the Project").
+
+## LOGIN DATA.
+
+| User             | Username               | Password     |
+| -----------------|:----------------------:| ------------:|
+| Admin            | admin@admin.com        | password     | 
+| Staff            | staff@admin.com        | password     |   
+| Travel Agent     | travelagent@admin.com  | password     |  
+
+
