@@ -6,6 +6,7 @@ use App\Models\Accommodation_allocation;
 use App\Models\Contract;
 use App\Http\Requests\StoreContractRequest;
 use App\Http\Requests\UpdateContractRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -84,5 +85,25 @@ class ContractController extends Controller
         $contract->travelAgent()->delete();
         $contract->delete();
         return response(Response::HTTP_NO_CONTENT);
+    }
+
+
+    public function search(Request $request)
+    {
+
+        $contract = Contract::orderBy('created_at', 'desc');
+        $query = $request->search;
+
+        if ($request->filled('search')) {
+            $contract->where(function ($p) use ($query) {
+                $p->where("contract_number", "like", "%" . $query . "%")
+                    ->orWhere('standard_rate', 'like', "%$query%")
+                    ->orWhere('start_date', 'like', "%$query%")
+                    ->orWhere('end_date', 'like', "%$query%");
+
+            });
+        }
+
+        return response($contract->with('travelAgent.user')->with('status')->get(), Response::HTTP_OK);
     }
 }

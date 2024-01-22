@@ -6,6 +6,7 @@ use App\Models\Accommodation;
 use App\Http\Requests\StoreaccommodationRequest;
 use App\Http\Requests\UpdateAccommodationRequest;
 use App\Models\Accommodation_allocation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -75,8 +76,26 @@ class AccommodationController extends Controller
      */
     public function destroy(Accommodation $accommodation)
     {
-        Accommodation_allocation::where('accommodation_id',$accommodation->id)->delete();
+        Accommodation_allocation::where('accommodation_id', $accommodation->id)->delete();
         $accommodation->delete();
         return response(Response::HTTP_NO_CONTENT);
+    }
+
+    public function search(Request $request)
+    {
+
+        $accommodation = Accommodation::orderBy('created_at', 'desc');
+        $query = $request->search;
+
+        if ($request->filled('search')) {
+            $accommodation->where(function ($p) use ($query) {
+                $p->where("name", "like", "%" . $query . "%")
+                    ->orWhere('country', 'like', "%$query%")
+                    ->orWhere('city', 'like', "%$query%")
+                    ->orWhere('standard_rack_rate', 'like', "%$query%");
+            });
+        }
+
+        return response($accommodation->get(), Response::HTTP_OK);
     }
 }

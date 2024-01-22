@@ -120,6 +120,25 @@ export const useAccommodationBookingStore = defineStore("accommodation_booking",
 
             }
         },
+        async searchAccommodationBookings(data) {
+            try {
+                this.isLoading = true;
+                await axios.get('/accommodation-allocations/search', {headers: {Authorization: `Bearer ${this.getToken()}`},params:{ search : data}}).then((res) => {
+                    this.accommodationBookings = res.data
+                    this.isLoading = false;
+                    this.scrollUp();
+                });
+            } catch (error) {
+                console.log(error);
+                this.isLoading = false;
+                if (error.response.status === 422) {
+                    this.scrollUp();
+                    this.errors = error.response.data.errors
+                    this.clearAlert();
+                }
+
+            }
+        },
         clearAlert() {
             setTimeout(() => this.errors = {}, 5000);
             setTimeout(() => this.success = {}, 5000);

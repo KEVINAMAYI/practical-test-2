@@ -124,6 +124,25 @@ export const useContractStore = defineStore("contract", {
 
             }
         },
+        async searchContracts(data) {
+            try {
+                this.isLoading = true;
+                await axios.get('/contracts/search', {headers: {Authorization: `Bearer ${this.getToken()}`},params:{search : data}}).then((res) => {
+                    console.log(res.data);
+                    this.contracts = res.data
+                    this.isLoading = false;
+                    this.scrollUp();
+                });
+            } catch (error) {
+                console.log(error);
+                this.isLoading = false;
+                if (error.response.status === 422) {
+                    this.scrollUp();
+                    this.errors = error.response.data.errors
+                    this.clearAlert();
+                }
+            }
+        },
         clearAlert() {
             setTimeout(() => this.errors = {}, 5000);
             setTimeout(() => this.success = {}, 5000);

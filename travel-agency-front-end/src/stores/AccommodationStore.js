@@ -116,6 +116,24 @@ export const useAccommodationStore = defineStore("accommodation", {
 
             }
         },
+        async searchAccomodations(data) {
+            try {
+                this.isLoading = true;
+                await axios.get('/accommodations/search', {headers: {Authorization: `Bearer ${this.getToken()}`},params:{ search : data }}).then((res) => {
+                    this.accommodations = res.data
+                    this.isLoading = false;
+                    this.scrollUp();
+                });
+            } catch (error) {
+                console.log(error);
+                this.isLoading = false;
+                if (error.response.status === 422) {
+                    this.scrollUp();
+                    this.errors = error.response.data.errors
+                    this.clearAlert();
+                }
+            }
+        },
         clearAlert() {
             setTimeout(() => this.errors = {}, 5000);
             setTimeout(() => this.success = {}, 5000);

@@ -128,6 +128,27 @@ export const useTravelAgentStore = defineStore("travel_agent", {
 
             }
         },
+        async searchTravelAgent(data) {
+            try {
+                console.log(data)
+                this.isLoading = true;
+                await axios.get(`/travel-agents/search`, {headers: {Authorization: `Bearer ${this.getToken()}`},params:{search:data}}).then((res) => {
+                    this.travelAgents = res.data
+                    console.log(res.data);
+                    this.isLoading = false;
+                    this.scrollUp();
+                });
+            } catch (error) {
+                console.log(error);
+                this.isLoading = false;
+                if (error.response.status === 422) {
+                    this.scrollUp();
+                    this.errors = error.response.data.errors
+                    this.clearAlert();
+                }
+
+            }
+        },
         clearAlert() {
             setTimeout(() => this.errors = {}, 5000);
             setTimeout(() => this.success = {}, 5000);

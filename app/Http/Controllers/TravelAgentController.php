@@ -59,7 +59,7 @@ class TravelAgentController extends Controller
      */
     public function show(TravelAgent $travelAgent)
     {
-       return response($travelAgent->load('user'),Response::HTTP_OK);
+        return response($travelAgent->load('user'), Response::HTTP_OK);
     }
 
 
@@ -100,5 +100,25 @@ class TravelAgentController extends Controller
         $travelAgent->user()->delete();
         $travelAgent->delete();
         return response(Response::HTTP_NO_CONTENT);
+    }
+
+
+    public function search(Request $request)
+    {
+
+        $travel_agents = TravelAgent::orderBy('created_at', 'desc');
+        $query = $request->search;
+
+        if ($request->filled('search')) {
+            $travel_agents->where(function ($p) use ($query) {
+                $p->WhereHas('user', function ($q) use ($query) {
+                    $q->where('email', 'like', "%$query%")
+                        ->orWhere('first_name', 'like', "%$query%")
+                        ->orWhere('last_name', 'like', "%$query%");
+                });
+            });
+        }
+
+        return response($travel_agents->with('user')->get(), Response::HTTP_OK);
     }
 }
